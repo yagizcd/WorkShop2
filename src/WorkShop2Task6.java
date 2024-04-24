@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class WorkShop2Task6 {
     public static void main(String[] args) {
@@ -46,7 +43,8 @@ public class WorkShop2Task6 {
         for(var gorev: gunlukGorev){
             System.out.println((iterate+1)+". Gorev Adi degissin mi?");
             String evetHayir = scanner.next();
-            if (evetHayir.equals("Evet") || evetHayir.equals("evet")){
+            evetHayir= evetHayir.toLowerCase();
+            if (evetHayir.equals("evet")){
                 System.out.println("Yeni görev adi:");
                 String gorevAdiGuncelle = scanner.next();
                 gorev.put("gorevAd",gorevAdiGuncelle);
@@ -57,7 +55,8 @@ public class WorkShop2Task6 {
 
             System.out.println("Gorev "+(iterate+1)+" tamamlandi mi?(Evet ya da hayir giriniz)");
             evetHayir = scanner.next();
-            if (evetHayir.equals("Evet") || evetHayir.equals("evet")) {
+            evetHayir= evetHayir.toLowerCase();
+            if (evetHayir.equals("evet")) {
                 gorev.put("Tamamlanma", true);
                 System.out.println("Siliniyor");
             }
@@ -76,24 +75,27 @@ public class WorkShop2Task6 {
             System.out.println("----------------------");
         }
 
-        System.out.println("Silinmiş Liste:");
         List<HashMap<String, Object>> silinecekler = new ArrayList<>();
         for (var gorev: gunlukGorev){
             var kontrol = (boolean) gorev.get("Tamamlanma");
             if (kontrol == true)
                 silinecekler.add(gorev);
         }
-
-        gunlukGorev.removeAll(silinecekler);
-        for (var gorev: gunlukGorev) {
-            System.out.println(gorev.get("gorevAd"));
-            var kontrol = (boolean) gorev.get("Tamamlanma");
-            if (kontrol == false)
-                System.out.println("Tamamlanmadı");
-            else
-                System.out.println("Tamamlandı");
-            System.out.println("----------------------");
-}
+        if(silinecekler.isEmpty())
+            System.out.println("Henüz biten bir görev yok");
+        else {
+            System.out.println("Tamamlanmayanlar Listesi:");
+            gunlukGorev.removeAll(silinecekler);
+            for (var gorev : gunlukGorev) {
+                System.out.println(gorev.get("gorevAd"));
+                var kontrol = (boolean) gorev.get("Tamamlanma");
+                if (kontrol == false)
+                    System.out.println("Tamamlanmadı");
+                else
+                    System.out.println("Tamamlandı");
+                System.out.println("----------------------");
+            }
+        }
 
     }
 }
